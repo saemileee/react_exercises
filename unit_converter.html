@@ -50,35 +50,42 @@
     }
     function KmToMiles() {
       const [amount, setAmount] = React.useState(0);
+      const [inverted, setInverted] = React.useState(true);
       const onChange = (event) => {
         setAmount(event.target.value);
       };
       const reset = () => setAmount(0);
+      const onInvert = () => {
+        reset();
+        setInverted((current) => !current);
+      };
       return (
         <div>
           <h3>Km 2 Miles</h3>
           <div>
             <label htmlFor="km">Km</label>
             <input
-              value={amount * 1.6}
+              value={inverted ? amount : amount * 1.609}
               onChange={onChange}
               id="km"
               placeholder="Km"
               type="Number"
+              disabled={!inverted}
             />
           </div>
           <div>
             <label htmlFor="mile">Mile</label>
             <input
-              value={amount}
+              value={inverted ? amount / 1.609 : amount}
               onChange={onChange}
               id="mile"
               placeholder="Mile"
               type="Number"
+              disabled={inverted}
             />
           </div>
           <button onClick={reset}>Reset</button>
-          <button>Invert</button>
+          <button onClick={onInvert}>Invert</button>
         </div>
       );
     }
